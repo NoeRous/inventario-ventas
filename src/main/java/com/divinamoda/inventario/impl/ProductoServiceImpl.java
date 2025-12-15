@@ -69,6 +69,7 @@ public class ProductoServiceImpl implements ProductoService {
         detalle.setTalla(dto.getTalla());
         detalle.setColor(dto.getColor());
         detalle.setStock(dto.getStock());
+        detalle.setAlmacen(dto.getAlmacen());
 
         return detalleRepo.save(detalle);
     }

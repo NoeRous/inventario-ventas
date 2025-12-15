@@ -28,6 +28,9 @@ public class ProductoDetalle {
     @Column(nullable = false)
     private Integer stock;
 
+    @Column(nullable = false)
+    private String almacen;
+
     @ManyToOne
     @JoinColumn(name = "producto_id",nullable = false)
     private Producto producto;

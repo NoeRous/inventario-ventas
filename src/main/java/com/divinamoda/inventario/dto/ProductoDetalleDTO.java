@@ -8,6 +8,7 @@ public class ProductoDetalleDTO {
     private Long productoId;
     private String talla;
     private String color;
+    private String almacen;
     private Integer stock;
     
 }
