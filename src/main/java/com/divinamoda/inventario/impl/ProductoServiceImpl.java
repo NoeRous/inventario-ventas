@@ -1,6 +1,7 @@
 package com.divinamoda.inventario.impl;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -35,7 +36,7 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
-    public Producto obtenerPorId(Long id) {
+    public Producto obtenerPorId(UUID id) {
         return productoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
     }
@@ -53,7 +54,7 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
-    public void eliminar(Long id) {
+    public void eliminar(UUID id) {
         productoRepository.deleteById(id);
     }
 

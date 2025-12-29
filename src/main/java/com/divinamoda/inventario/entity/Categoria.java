@@ -1,6 +1,7 @@
 package com.divinamoda.inventario.entity;
 
 import java.util.List;
+import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,8 +17,8 @@ import lombok.Data;
 
 public class Categoria {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column(nullable = false)
     private String nombre;

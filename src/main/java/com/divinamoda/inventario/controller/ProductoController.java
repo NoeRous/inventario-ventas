@@ -1,6 +1,7 @@
 package com.divinamoda.inventario.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,7 +37,7 @@ public class ProductoController {
     @PostMapping
     public Producto crear(@RequestBody Producto producto) {
         // Validar que la categoría exista
-        Long categoriaId = producto.getCategoria().getId();
+        UUID categoriaId = producto.getCategoria().getId();
         Categoria categoria = categoriaRepo.findById(categoriaId)
                 .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
         producto.setCategoria(categoria);
@@ -58,7 +59,7 @@ public class ProductoController {
 
     // READ (por id)
     @GetMapping("/{id}")
-    public Producto obtener(@PathVariable Long id) {
+    public Producto obtener(@PathVariable UUID id) {
         return productoService.obtenerPorId(id);
     }
 
@@ -66,7 +67,7 @@ public class ProductoController {
     @PutMapping
     public Producto actualizar(@RequestBody Producto producto) {
         // Validar categoría si quieres
-        Long categoriaId = producto.getCategoria().getId();
+        UUID categoriaId = producto.getCategoria().getId();
         Categoria categoria = categoriaRepo.findById(categoriaId)
                 .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
         producto.setCategoria(categoria);
@@ -76,7 +77,7 @@ public class ProductoController {
 
     // DELETE
     @DeleteMapping("/{id}")
-    public void eliminar(@PathVariable Long id) {
+    public void eliminar(@PathVariable UUID id) {
         productoService.eliminar(id);
     }
 }
