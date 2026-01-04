@@ -89,8 +89,8 @@ public class ProductController {
 
     // READ (todos)
     @GetMapping
-    public List<Product> listarTodos() {
-        return productService.listarTodos();
+    public List<Product> listAllProducts() {
+        return productService.listAllProducts();
     }
 
     // READ (por id)

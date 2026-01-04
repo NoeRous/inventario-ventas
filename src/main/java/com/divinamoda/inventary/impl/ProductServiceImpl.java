@@ -31,7 +31,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> listarTodos() {
+    public List<Product> listAllProducts() {
         return productRepository.findAll();
     }
 
