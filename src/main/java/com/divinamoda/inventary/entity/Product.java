@@ -51,7 +51,7 @@ public class Product {
     private InventoryState inventoryState;
 
     @ManyToOne
-    @JoinColumn(name = "categoria_id", nullable = false)
-    private Category categoria;
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
 }
 

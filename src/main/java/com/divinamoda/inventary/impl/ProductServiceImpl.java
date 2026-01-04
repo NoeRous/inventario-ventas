@@ -16,17 +16,17 @@ import com.divinamoda.inventary.service.ProductService;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
-    private final ProductDetailRepository detalleRepo;
+    private final ProductDetailRepository detailRepo;
 
     // ✅ INYECTAMOS LOS DOS
     public ProductServiceImpl(ProductRepository productRepository,
-                               ProductDetailRepository detalleRepo) {
+                               ProductDetailRepository detailRepo) {
         this.productRepository = productRepository;
-        this.detalleRepo = detalleRepo;
+        this.detailRepo = detailRepo;
     }
 
     @Override
-    public Product guardar(Product product) {
+    public Product saveProduct(Product product) {
         return productRepository.save(product);
     }
 
@@ -50,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
         exist.setPrice(product.getPrice());
         exist.setStock(product.getStock());
         exist.setInventoryState(product.getInventoryState());
-        exist.setCategoria(product.getCategoria());    
+        exist.setCategory(product.getCategory());    
         return productRepository.save(exist);
     }
 
@@ -61,17 +61,17 @@ public class ProductServiceImpl implements ProductService {
 
     // ✅ MÉTODO PARA AGREGAR DETALLE
     @Override
-    public ProductDetail agregarDetalle(ProductDetailDTO dto) {
+    public ProductDetail addDetail(ProductDetailDTO dto) {
 
         Product product = productRepository.findById(dto.getProductId())
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
 
-        ProductDetail detalle = new ProductDetail();
-        detalle.setProduct(product);
-        detalle.setSize(dto.getSize());
-        detalle.setColor(dto.getColor());
-        detalle.setStock(dto.getStock());
-        detalle.setWarehouse(dto.getWarehouse());
-        return detalleRepo.save(detalle);
+        ProductDetail detail = new ProductDetail();
+        detail.setProduct(product);
+        detail.setSize(dto.getSize());
+        detail.setColor(dto.getColor());
+        detail.setStock(dto.getStock());
+        detail.setWarehouse(dto.getWarehouse());
+        return detailRepo.save(detail);
     }
 }

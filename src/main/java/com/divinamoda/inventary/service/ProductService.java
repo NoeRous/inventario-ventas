@@ -9,11 +9,11 @@ import com.divinamoda.inventary.entity.ProductDetail;
 
 public interface ProductService {
 
-    Product guardar(Product producto);
+    Product saveProduct(Product product);
     List<Product> listarTodos();
     Product obtenerPorId(UUID id);
-    Product actualizar(Product producto);
+    Product actualizar(Product product);
     void eliminar(UUID id);
 
-    ProductDetail agregarDetalle(ProductDetailDTO dto);
+    ProductDetail addDetail(ProductDetailDTO dto);
 }

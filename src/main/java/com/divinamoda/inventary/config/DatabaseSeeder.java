@@ -9,15 +9,15 @@ import com.divinamoda.inventary.repository.CategoryRepository;
 @Component
 public class DatabaseSeeder implements CommandLineRunner {
 
-    private final CategoryRepository categoriaRepository;
+    private final CategoryRepository categoryRepository;
 
-    public DatabaseSeeder(CategoryRepository categoriaRepository) {
-        this.categoriaRepository = categoriaRepository;
+    public DatabaseSeeder(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
     }
 
     @Override
     public void run(String... args) throws Exception {
-        if (categoriaRepository.count() == 0) {
+        if (categoryRepository.count() == 0) {
             Category c1 = new Category();
             c1.setName("BODY MANGA CORTA");
 
@@ -30,10 +30,10 @@ public class DatabaseSeeder implements CommandLineRunner {
             Category c4 = new Category();
             c4.setName("BODY CURVY");
 
-            categoriaRepository.save(c1);
-            categoriaRepository.save(c2);
-            categoriaRepository.save(c3);
-            categoriaRepository.save(c4);
+            categoryRepository.save(c1);
+            categoryRepository.save(c2);
+            categoryRepository.save(c3);
+            categoryRepository.save(c4);
 
             System.out.println("Seeder: Categorías iniciales creadas.");
         }

@@ -26,94 +26,94 @@ import com.divinamoda.inventary.service.ProductService;
 @RequestMapping("/api/products")
 public class ProductController {
 
-    private final ProductService productoService;
-    private final CategoryRepository categoriaRepo;
+    private final ProductService productService;
+    private final CategoryRepository categoryRepo;
 
     // Inyectamos ambos repositorios/servicios
-    public ProductController(ProductService productoService, CategoryRepository categoriaRepo) {
-        this.productoService = productoService;
-        this.categoriaRepo = categoriaRepo;
+    public ProductController(ProductService productService, CategoryRepository categoryRepo) {
+        this.productService = productService;
+        this.categoryRepo = categoryRepo;
     }
 
     // CREATE
     @PostMapping
-    public ProductDTO crear(@RequestBody ProductDTO productoDTO) {
+    public ProductDTO createProduct(@RequestBody ProductDTO productDTO) {
 
         // 1️⃣ Validar que la categoría exista
-        UUID categoryId = productoDTO.getCategoryId();
-        Category categoria = categoriaRepo.findById(categoryId)
+        UUID categoryId = productDTO.getCategoryId();
+        Category category = categoryRepo.findById(categoryId)
                 .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
 
         // 2️⃣ Crear la entidad Producto y mapear los campos desde el DTO
-        Product producto = new Product();
-        producto.setCode(productoDTO.getCode());
-        producto.setName(productoDTO.getName());
-        producto.setDescription(productoDTO.getDescription());
-        producto.setPrice(productoDTO.getPrice());
-        producto.setStock(productoDTO.getStock());
-        producto.setImage(productoDTO.getImage());
-        producto.setRating(productoDTO.getRating());
-        producto.setInventoryState(
-        productoDTO.getInventoryState() != null
-                ? InventoryState.valueOf(productoDTO.getInventoryState())
+        Product product = new Product();
+        product.setCode(productDTO.getCode());
+        product.setName(productDTO.getName());
+        product.setDescription(productDTO.getDescription());
+        product.setPrice(productDTO.getPrice());
+        product.setStock(productDTO.getStock());
+        product.setImage(productDTO.getImage());
+        product.setRating(productDTO.getRating());
+        product.setInventoryState(
+        productDTO.getInventoryState() != null
+                ? InventoryState.valueOf(productDTO.getInventoryState())
                 : InventoryState.AVAILABLE // default
 );
 
-        producto.setCategoria(categoria); // asignar la categoría válida
+        product.setCategory(category); // asignar la categoría válida
 
         // 3️⃣ Guardar la entidad
-        Product productoGuardado = productoService.guardar(producto);
+        Product productSave = productService.saveProduct(product);
 
         // 4️⃣ Mapear la entidad guardada a DTO para enviar al frontend
         ProductDTO dtoResponse = new ProductDTO();
-        //dtoResponse.setId(productoGuardado.getId());
-        dtoResponse.setCode(productoGuardado.getCode());
-        dtoResponse.setName(productoGuardado.getName());
-        dtoResponse.setDescription(productoGuardado.getDescription());
-        dtoResponse.setPrice(productoGuardado.getPrice());
-        dtoResponse.setStock(productoGuardado.getStock());
-        dtoResponse.setImage(productoGuardado.getImage());
-        dtoResponse.setRating(productoGuardado.getRating());
-        dtoResponse.setInventoryState(productoGuardado.getInventoryState().name());
-        dtoResponse.setCategoryId(productoGuardado.getCategoria().getId());
-       // dtoResponse.setCategoria(productoGuardado.getCategoria().getNombre());
+        //dtoResponse.setId(productSave.getId());
+        dtoResponse.setCode(productSave.getCode());
+        dtoResponse.setName(productSave.getName());
+        dtoResponse.setDescription(productSave.getDescription());
+        dtoResponse.setPrice(productSave.getPrice());
+        dtoResponse.setStock(productSave.getStock());
+        dtoResponse.setImage(productSave.getImage());
+        dtoResponse.setRating(productSave.getRating());
+        dtoResponse.setInventoryState(productSave.getInventoryState().name());
+        dtoResponse.setCategoryId(productSave.getCategory().getId());
+       // dtoResponse.setCategoria(productSave.getCategory().getNombre());
 
         return dtoResponse;
     }
 
     @PostMapping("/details")
-    public ResponseEntity<ProductDetail> agregarDetalle(@RequestBody ProductDetailDTO dto) {
-        ProductDetail detalle = productoService.agregarDetalle(dto);
-        return ResponseEntity.ok(detalle);
+    public ResponseEntity<ProductDetail> addDetail(@RequestBody ProductDetailDTO dto) {
+        ProductDetail detail = productService.addDetail(dto);
+        return ResponseEntity.ok(detail);
     }
 
     // READ (todos)
     @GetMapping
     public List<Product> listarTodos() {
-        return productoService.listarTodos();
+        return productService.listarTodos();
     }
 
     // READ (por id)
     @GetMapping("/{id}")
     public Product obtener(@PathVariable UUID id) {
-        return productoService.obtenerPorId(id);
+        return productService.obtenerPorId(id);
     }
 
     // UPDATE
     @PutMapping
-    public Product actualizar(@RequestBody Product producto) {
+    public Product actualizar(@RequestBody Product product) {
         // Validar categoría si quieres
-        UUID categoriaId = producto.getCategoria().getId();
-        Category categoria = categoriaRepo.findById(categoriaId)
+        UUID categoryId = product.getCategory().getId();
+        Category category = categoryRepo.findById(categoryId)
                 .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
-        producto.setCategoria(categoria);
+        product.setCategory(category);
 
-        return productoService.actualizar(producto);
+        return productService.actualizar(product);
     }
 
     // DELETE
     @DeleteMapping("/{id}")
     public void eliminar(@PathVariable UUID id) {
-        productoService.eliminar(id);
+        productService.eliminar(id);
     }
 }
