@@ -1,4 +1,4 @@
-package com.divinamoda.inventario.entity;
+package com.divinamoda.inventary.entity;
 
 import java.util.List;
 import java.util.UUID;
@@ -12,14 +12,14 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "categorias")
+@Table(name = "categories")
 @Data
 
-public class Categoria {
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(nullable = false)
-    private String nombre;
+    private String name;
 }

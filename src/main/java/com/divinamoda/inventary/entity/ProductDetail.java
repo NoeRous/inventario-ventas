@@ -1,4 +1,4 @@
-package com.divinamoda.inventario.entity;
+package com.divinamoda.inventary.entity;
 
 import java.util.UUID;
 
@@ -13,16 +13,16 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "producto_detalles") 
+@Table(name = "product_details") 
 @Data
-public class ProductoDetalle {
+public class ProductDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(nullable = false)
-    private String talla;
+    private String size;
 
     @Column(nullable = false)
     private String color;
@@ -31,10 +31,10 @@ public class ProductoDetalle {
     private Integer stock;
 
     @Column(nullable = false)
-    private String almacen;
+    private String warehouse;
 
     @ManyToOne
-    @JoinColumn(name = "producto_id",nullable = false)
-    private Producto producto;
+    @JoinColumn(name = "product_id",nullable = false)
+    private Product product;
     
 }
