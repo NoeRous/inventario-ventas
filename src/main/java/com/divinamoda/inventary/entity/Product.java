@@ -40,7 +40,7 @@ public class Product {
     @Column(nullable = false)
     private Integer stock;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 2083)
     private String image;
 
     @Column(nullable = false)

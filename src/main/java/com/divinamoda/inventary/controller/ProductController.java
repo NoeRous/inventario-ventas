@@ -56,7 +56,7 @@ public class ProductController {
         product.setInventoryState(
         productDTO.getInventoryState() != null
                 ? InventoryState.valueOf(productDTO.getInventoryState())
-                : InventoryState.AVAILABLE // default
+                : InventoryState.DISPONIBLE // default
 );
 
         product.setCategory(category); // asignar la categoría válida
