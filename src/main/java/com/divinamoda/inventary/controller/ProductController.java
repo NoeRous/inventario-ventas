@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.divinamoda.inventary.dto.ProductDTO;
 import com.divinamoda.inventary.dto.ProductDetailDTO;
@@ -116,4 +118,13 @@ public class ProductController {
     public void eliminar(@PathVariable UUID id) {
         productService.eliminar(id);
     }
+
+    @PostMapping("/upload/{id}/image")
+    public Product uploadProductImage(@PathVariable UUID id, @RequestParam("image") MultipartFile file) {
+        System.out.println(">>> ENTRO AL ENDPOINT uploadProductImage");
+        System.out.println("ID: " + id);
+        return productService.updateProductImage(id, file);
+       // return productService.updateProductImage(id, file);
+    }
+
 }
