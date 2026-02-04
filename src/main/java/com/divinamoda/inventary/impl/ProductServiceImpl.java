@@ -53,6 +53,7 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
 
         exist.setName(product.getName());
+        exist.setDescription(product.getDescription());
         exist.setPrice(product.getPrice());
         exist.setStock(product.getStock());
         exist.setInventoryState(product.getInventoryState());
