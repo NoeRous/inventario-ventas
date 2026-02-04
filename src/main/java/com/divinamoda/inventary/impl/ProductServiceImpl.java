@@ -48,7 +48,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product actualizar(Product product) {
+    public Product updateProduct(Product product) {
         Product exist = productRepository.findById(product.getId())
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
 

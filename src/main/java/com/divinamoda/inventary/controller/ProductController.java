@@ -21,6 +21,8 @@ import com.divinamoda.inventary.entity.Category;
 import com.divinamoda.inventary.entity.Product;
 import com.divinamoda.inventary.entity.ProductDetail;
 import com.divinamoda.inventary.enums.InventoryState;
+import com.divinamoda.inventary.exception.BadRequestException;
+import com.divinamoda.inventary.exception.ResourceNotFoundException;
 import com.divinamoda.inventary.repository.CategoryRepository;
 import com.divinamoda.inventary.service.ProductService;
 
@@ -56,10 +58,10 @@ public class ProductController {
         product.setImage(productDTO.getImage());
         product.setRating(productDTO.getRating());
         product.setInventoryState(
-        productDTO.getInventoryState() != null
-                ? InventoryState.valueOf(productDTO.getInventoryState())
-                : InventoryState.DISPONIBLE // default
-);
+                productDTO.getInventoryState() != null
+                        ? InventoryState.valueOf(productDTO.getInventoryState())
+                        : InventoryState.DISPONIBLE // default
+        );
 
         product.setCategory(category); // asignar la categoría válida
 
@@ -68,7 +70,7 @@ public class ProductController {
 
         // 4️⃣ Mapear la entidad guardada a DTO para enviar al frontend
         ProductDTO dtoResponse = new ProductDTO();
-        //dtoResponse.setId(productSave.getId());
+        // dtoResponse.setId(productSave.getId());
         dtoResponse.setCode(productSave.getCode());
         dtoResponse.setName(productSave.getName());
         dtoResponse.setDescription(productSave.getDescription());
@@ -78,7 +80,7 @@ public class ProductController {
         dtoResponse.setRating(productSave.getRating());
         dtoResponse.setInventoryState(productSave.getInventoryState().name());
         dtoResponse.setCategoryId(productSave.getCategory().getId());
-       // dtoResponse.setCategoria(productSave.getCategory().getNombre());
+        // dtoResponse.setCategoria(productSave.getCategory().getNombre());
 
         return dtoResponse;
     }
@@ -102,15 +104,25 @@ public class ProductController {
     }
 
     // UPDATE
-    @PutMapping
-    public Product actualizar(@RequestBody Product product) {
-        // Validar categoría si quieres
-        UUID categoryId = product.getCategory().getId();
-        Category category = categoryRepo.findById(categoryId)
-                .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
+    @PutMapping("/{id}")
+    public Product updateProduct(
+            @PathVariable UUID id,
+            @RequestBody Product product) {
+
+        if (product.getCategory() == null || product.getCategory().getId() == null) {
+            throw new BadRequestException("La categoría es obligatoria");
+        }
+
+        product.setId(id);
+
+        Category category = categoryRepo.findById(product.getCategory().getId())
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Categoría no encontrada")
+                );
+
         product.setCategory(category);
 
-        return productService.actualizar(product);
+        return productService.updateProduct(product);
     }
 
     // DELETE
@@ -124,7 +136,7 @@ public class ProductController {
         System.out.println(">>> ENTRO AL ENDPOINT uploadProductImage");
         System.out.println("ID: " + id);
         return productService.updateProductImage(id, file);
-       // return productService.updateProductImage(id, file);
+        // return productService.updateProductImage(id, file);
     }
 
 }
