@@ -16,7 +16,8 @@ public interface ProductService {
     Product obtenerPorId(UUID id);
     Product updateProduct(Product product);
     void eliminar(UUID id);
+    Product updateProductImage(UUID productId, MultipartFile file);
 
     ProductDetail addDetail(ProductDetailDTO dto);
-    Product updateProductImage(UUID productId, MultipartFile file);
+    List<ProductDetail> getProductDetails(UUID productId);
 }

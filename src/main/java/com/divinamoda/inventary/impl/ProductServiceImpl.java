@@ -26,7 +26,7 @@ public class ProductServiceImpl implements ProductService {
 
     // ✅ INYECTAMOS LOS DOS
     public ProductServiceImpl(ProductRepository productRepository,
-        ProductDetailRepository detailRepo) {
+            ProductDetailRepository detailRepo) {
         this.productRepository = productRepository;
         this.detailRepo = detailRepo;
     }
@@ -57,7 +57,7 @@ public class ProductServiceImpl implements ProductService {
         exist.setPrice(product.getPrice());
         exist.setStock(product.getStock());
         exist.setInventoryState(product.getInventoryState());
-        exist.setCategory(product.getCategory());    
+        exist.setCategory(product.getCategory());
         return productRepository.save(exist);
     }
 
@@ -83,51 +83,58 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-public Product updateProductImage(UUID productId, MultipartFile file) {
+    public Product updateProductImage(UUID productId, MultipartFile file) {
 
-    Product product = productRepository.findById(productId)
-            .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
 
-    if (file == null || file.isEmpty()) {
-        throw new RuntimeException("Archivo vacío");
-    }
-
-    try {
-        // 📁 Carpeta uploads/products (relativa al proyecto)
-        Path uploadPath = Paths.get("uploads");
-
-        // Crear carpetas si no existen
-        if (!Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath);
+        if (file == null || file.isEmpty()) {
+            throw new RuntimeException("Archivo vacío");
         }
 
-        // 📄 Obtener extensión segura
-        String originalFilename = file.getOriginalFilename();
-        String extension = "";
+        try {
+            // 📁 Carpeta uploads/products (relativa al proyecto)
+            Path uploadPath = Paths.get("uploads");
 
-        if (originalFilename != null && originalFilename.contains(".")) {
-            extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+            // Crear carpetas si no existen
+            if (!Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath);
+            }
+
+            // 📄 Obtener extensión segura
+            String originalFilename = file.getOriginalFilename();
+            String extension = "";
+
+            if (originalFilename != null && originalFilename.contains(".")) {
+                extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+            }
+
+            // 🆔 Nombre único
+            String fileName = UUID.randomUUID().toString() + extension;
+
+            // 💾 Guardar archivo
+            Path filePath = uploadPath.resolve(fileName);
+            Files.copy(
+                    file.getInputStream(),
+                    filePath,
+                    StandardCopyOption.REPLACE_EXISTING);
+
+            // 🗂 Guardar ruta relativa en BD
+            product.setImage("/uploads/" + fileName);
+
+            return productRepository.save(product);
+
+        } catch (IOException e) {
+            throw new RuntimeException("Error al guardar imagen", e);
         }
-
-        // 🆔 Nombre único
-        String fileName = UUID.randomUUID().toString() + extension;
-
-        // 💾 Guardar archivo
-        Path filePath = uploadPath.resolve(fileName);
-        Files.copy(
-                file.getInputStream(),
-                filePath,
-                StandardCopyOption.REPLACE_EXISTING
-        );
-
-        // 🗂 Guardar ruta relativa en BD
-        product.setImage("/uploads/" + fileName);
-
-        return productRepository.save(product);
-
-    } catch (IOException e) {
-        throw new RuntimeException("Error al guardar imagen", e);
     }
-}
+
+    //✅ MÉTODO PARA OBTENER DETALLES DE UN PRODUCTO
+    @Override
+    public List<ProductDetail> getProductDetails(UUID productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado")); 
+        return detailRepo.findByProduct(product);   
+    }
 
 }

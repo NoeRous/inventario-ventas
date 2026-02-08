@@ -139,4 +139,9 @@ public class ProductController {
         // return productService.updateProductImage(id, file);
     }
 
+    //obtener detalles de un producto
+    @GetMapping("/{id}/details")
+    public List<ProductDetail> getProductDetails(@PathVariable UUID id) {
+        return productService.getProductDetails(id);
+    }
 }
