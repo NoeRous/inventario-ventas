@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.divinamoda.inventary.dto.ProductDetailDTO;
 import com.divinamoda.inventary.entity.ProductDetail;
 import com.divinamoda.inventary.service.ProductDetailService;
+
 @RestController
 @RequestMapping("/api/product-details")
 public class ProductDetailController {
-
 
     private final ProductDetailService productDetailService;
 
@@ -38,13 +38,13 @@ public class ProductDetailController {
         responseDTO.setSize(savedDetail.getSize());
         responseDTO.setColor(savedDetail.getColor());
         responseDTO.setStock(savedDetail.getStock());
-        responseDTO.setWarehouse(savedDetail.getWarehouse());   
+        responseDTO.setWarehouse(savedDetail.getWarehouse());
         return responseDTO;
     }
 
-       // UPDATE
+    // UPDATE
     @PutMapping("/{id}")
-    public ProductDetailDTO updateProduct( @PathVariable UUID id, @RequestBody ProductDetailDTO productDetailDTO) {
+    public ProductDetailDTO updateProduct(@PathVariable UUID id, @RequestBody ProductDetailDTO productDetailDTO) {
 
         ProductDetail detail = new ProductDetail();
         detail.setId(id);
@@ -60,11 +60,11 @@ public class ProductDetailController {
         responseDTO.setSize(updatedDetail.getSize());
         responseDTO.setColor(updatedDetail.getColor());
         responseDTO.setStock(updatedDetail.getStock());
-        responseDTO.setWarehouse(updatedDetail.getWarehouse());   
+        responseDTO.setWarehouse(updatedDetail.getWarehouse());
         return responseDTO;
     }
 
-        // DELETE
+    // DELETE
     @DeleteMapping("/{id}")
     public void delete(@PathVariable UUID id) {
         productDetailService.delete(id);
