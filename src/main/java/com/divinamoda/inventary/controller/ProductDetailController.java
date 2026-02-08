@@ -2,6 +2,7 @@ package com.divinamoda.inventary.controller;
 
 import java.util.UUID;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -61,5 +62,11 @@ public class ProductDetailController {
         responseDTO.setStock(updatedDetail.getStock());
         responseDTO.setWarehouse(updatedDetail.getWarehouse());   
         return responseDTO;
+    }
+
+        // DELETE
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable UUID id) {
+        productDetailService.delete(id);
     }
 }

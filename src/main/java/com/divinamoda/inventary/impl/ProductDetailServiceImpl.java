@@ -25,7 +25,11 @@ public class ProductDetailServiceImpl implements ProductDetailService {
     public ProductDetail updateDetail(ProductDetail detail) {
         // TODO Auto-generated method stub
         return detailRepo.save(detail);
+    }
 
+    @Override
+    public void delete(java.util.UUID id) {
+        detailRepo.deleteById(id);  
     }
 
 }
