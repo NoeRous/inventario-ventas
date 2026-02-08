@@ -161,8 +161,8 @@ public class ProductController {
 
     // DELETE
     @DeleteMapping("/{id}")
-    public void eliminar(@PathVariable UUID id) {
-        productService.eliminar(id);
+    public void delete(@PathVariable UUID id) {
+        productService.delete(id);
     }
 
     @PostMapping("/upload/{id}/image")

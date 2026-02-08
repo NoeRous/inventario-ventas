@@ -8,12 +8,14 @@ import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.divinamoda.inventary.dto.ProductDetailDTO;
 import com.divinamoda.inventary.entity.Product;
 import com.divinamoda.inventary.entity.ProductDetail;
+import com.divinamoda.inventary.exception.BadRequestException;
 import com.divinamoda.inventary.repository.ProductDetailRepository;
 import com.divinamoda.inventary.repository.ProductRepository;
 import com.divinamoda.inventary.service.ProductService;
@@ -62,8 +64,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void eliminar(UUID id) {
-        productRepository.deleteById(id);
+    public void delete(UUID id) {
+        try {
+            productRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new BadRequestException(
+                "No se puede eliminar el producto porque tiene detalles asociados(Elimine primero los detalles)"
+            );
+        }
     }
 
     // ✅ MÉTODO PARA AGREGAR DETALLE
