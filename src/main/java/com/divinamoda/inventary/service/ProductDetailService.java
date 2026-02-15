@@ -1,7 +1,7 @@
 package com.divinamoda.inventary.service;
 import java.util.UUID;
 
-import com.divinamoda.inventary.entity.ProductDetail;
+import com.divinamoda.inventary.entity.products.ProductDetail;
 
 public interface ProductDetailService {
 

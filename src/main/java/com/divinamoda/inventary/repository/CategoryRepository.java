@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.divinamoda.inventary.entity.Category;
+import com.divinamoda.inventary.entity.products.Category;
 
 public interface CategoryRepository extends JpaRepository<Category, UUID> {
 }

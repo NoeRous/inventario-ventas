@@ -3,7 +3,8 @@ package com.divinamoda.inventary.impl;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
-import com.divinamoda.inventary.entity.ProductDetail;
+
+import com.divinamoda.inventary.entity.products.ProductDetail;
 import com.divinamoda.inventary.enums.InventoryState;
 import com.divinamoda.inventary.repository.ProductDetailRepository;
 import com.divinamoda.inventary.repository.ProductRepository;

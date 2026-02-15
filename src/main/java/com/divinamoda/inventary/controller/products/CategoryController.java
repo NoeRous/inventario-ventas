@@ -1,4 +1,4 @@
-package com.divinamoda.inventary.controller;
+package com.divinamoda.inventary.controller.products;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.divinamoda.inventary.entity.Category;
+import com.divinamoda.inventary.entity.products.Category;
 import com.divinamoda.inventary.repository.CategoryRepository;
 
 @RestController

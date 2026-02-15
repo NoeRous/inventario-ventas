@@ -7,8 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.divinamoda.inventary.entity.Product;
-import com.divinamoda.inventary.entity.ProductDetail;
+import com.divinamoda.inventary.dto.sales.AvailableProductDTO;
+import com.divinamoda.inventary.entity.products.Product;
+import com.divinamoda.inventary.entity.products.ProductDetail;
 
 public interface ProductDetailRepository extends JpaRepository<ProductDetail, UUID> {
 
@@ -20,4 +21,25 @@ public interface ProductDetailRepository extends JpaRepository<ProductDetail, UU
         WHERE d.product.id = :productId
     """)
     Integer sumStockByProductId(@Param("productId") UUID productId);
+
+    @Query("""
+    SELECT new com.divinamoda.inventary.dto.sales.AvailableProductDTO(
+        c.name,
+        p.name,
+        p.image,
+        p.price,
+        pd.id,
+        pd.color,
+        pd.size,
+        pd.stock,
+        pd.warehouse
+    )
+    FROM ProductDetail pd
+    JOIN pd.product p
+    JOIN p.category c
+    WHERE p.inventoryState IN ('BAJO_STOCK', 'DISPONIBLE')
+    ORDER BY p.name
+    """)
+    List<AvailableProductDTO> findAvailableProductsForSale();
+
 }

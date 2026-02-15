@@ -12,9 +12,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.divinamoda.inventary.dto.ProductDetailDTO;
-import com.divinamoda.inventary.entity.Product;
-import com.divinamoda.inventary.entity.ProductDetail;
+import com.divinamoda.inventary.dto.products.ProductDetailDTO;
+import com.divinamoda.inventary.entity.products.Product;
+import com.divinamoda.inventary.entity.products.ProductDetail;
 import com.divinamoda.inventary.exception.BadRequestException;
 import com.divinamoda.inventary.repository.ProductDetailRepository;
 import com.divinamoda.inventary.repository.ProductRepository;

@@ -3,7 +3,7 @@ package com.divinamoda.inventary.config;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import com.divinamoda.inventary.entity.Category;
+import com.divinamoda.inventary.entity.products.Category;
 import com.divinamoda.inventary.repository.CategoryRepository;
 
 @Component

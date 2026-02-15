@@ -1,6 +1,8 @@
-package com.divinamoda.inventary.entity;
+package com.divinamoda.inventary.entity.products;
 
 import java.util.UUID;
+
+import com.divinamoda.inventary.entity.products.Product;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

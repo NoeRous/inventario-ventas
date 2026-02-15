@@ -1,8 +1,8 @@
-package com.divinamoda.inventary.dto;
+package com.divinamoda.inventary.dto.products;
 
 import java.util.UUID;
 
-import com.divinamoda.inventary.entity.Product;
+import com.divinamoda.inventary.entity.products.Product;
 
 import lombok.Data;
 

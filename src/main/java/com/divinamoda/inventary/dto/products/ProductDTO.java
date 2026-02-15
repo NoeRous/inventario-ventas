@@ -1,4 +1,4 @@
-package com.divinamoda.inventary.dto;
+package com.divinamoda.inventary.dto.products;
 
 import java.util.UUID;
 

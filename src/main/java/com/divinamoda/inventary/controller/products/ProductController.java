@@ -1,4 +1,4 @@
-package com.divinamoda.inventary.controller;
+package com.divinamoda.inventary.controller.products;
 
 import java.util.List;
 import java.util.UUID;
@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.divinamoda.inventary.dto.ProductDTO;
-import com.divinamoda.inventary.dto.ProductDetailDTO;
-import com.divinamoda.inventary.entity.Category;
-import com.divinamoda.inventary.entity.Product;
-import com.divinamoda.inventary.entity.ProductDetail;
+import com.divinamoda.inventary.dto.products.ProductDTO;
+import com.divinamoda.inventary.dto.products.ProductDetailDTO;
+import com.divinamoda.inventary.entity.products.Category;
+import com.divinamoda.inventary.entity.products.Product;
+import com.divinamoda.inventary.entity.products.ProductDetail;
 import com.divinamoda.inventary.enums.InventoryState;
 import com.divinamoda.inventary.exception.BadRequestException;
 import com.divinamoda.inventary.exception.ResourceNotFoundException;

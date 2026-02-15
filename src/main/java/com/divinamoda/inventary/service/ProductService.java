@@ -5,9 +5,9 @@ import java.util.UUID;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.divinamoda.inventary.dto.ProductDetailDTO;
-import com.divinamoda.inventary.entity.Product;
-import com.divinamoda.inventary.entity.ProductDetail;
+import com.divinamoda.inventary.dto.products.ProductDetailDTO;
+import com.divinamoda.inventary.entity.products.Product;
+import com.divinamoda.inventary.entity.products.ProductDetail;
 
 public interface ProductService {
 

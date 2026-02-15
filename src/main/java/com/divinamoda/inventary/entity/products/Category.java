@@ -1,4 +1,4 @@
-package com.divinamoda.inventary.entity;
+package com.divinamoda.inventary.entity.products;
 
 import java.util.List;
 import java.util.UUID;
