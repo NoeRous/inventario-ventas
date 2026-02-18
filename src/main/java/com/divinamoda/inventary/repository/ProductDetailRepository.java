@@ -37,7 +37,7 @@ public interface ProductDetailRepository extends JpaRepository<ProductDetail, UU
     FROM ProductDetail pd
     JOIN pd.product p
     JOIN p.category c
-    WHERE p.inventoryState IN ('BAJO_STOCK', 'DISPONIBLE')
+    WHERE p.inventoryState IN ('BAJO_STOCK', 'DISPONIBLE') and pd.stock > 0
     ORDER BY p.name
     """)
     List<AvailableProductDTO> findAvailableProductsForSale();

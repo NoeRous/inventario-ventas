@@ -20,7 +20,10 @@ import com.divinamoda.inventary.repository.ProductDetailRepository;
 import com.divinamoda.inventary.repository.ProductRepository;
 import com.divinamoda.inventary.service.ProductService;
 
+import jakarta.transaction.Transactional;
+
 @Service
+@Transactional
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
