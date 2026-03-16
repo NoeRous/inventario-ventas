@@ -26,7 +26,7 @@ public class SaleController {
     private final SaleService saleService;
 
     public SaleController(SaleService saleService,
-            ProductDetailRepository productDetailRepository) {
+        ProductDetailRepository productDetailRepository) {
         this.saleService = saleService;
         this.productDetailRepository = productDetailRepository;
     }
@@ -38,8 +38,13 @@ public class SaleController {
 
     @PostMapping
     public ResponseEntity<Sale> createSale(@RequestBody SaleDTO saleDTO) {
-        return saleService.saveSale(saleDTO) != null
-                ? ResponseEntity.ok(saleService.saveSale(saleDTO))
-                : ResponseEntity.badRequest().build();
+        try {
+            System.out.println("+=========**********=========saleDTO===");
+            Sale savedSale = saleService.saveSale(saleDTO);
+            return ResponseEntity.ok(savedSale);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
     }
 }

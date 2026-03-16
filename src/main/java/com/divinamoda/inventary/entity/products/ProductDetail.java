@@ -30,7 +30,7 @@ public class ProductDetail {
     private String color;
 
     @Column(nullable = false)
-    private Integer stock;
+    public Integer stock;
 
     @Column(nullable = false)
     private String warehouse;

@@ -16,10 +16,10 @@ public interface ProductDetailRepository extends JpaRepository<ProductDetail, UU
     List<ProductDetail> findByProduct(Product product);
 
     @Query("""
-        SELECT COALESCE(SUM(d.stock), 0)
-        FROM ProductDetail d
-        WHERE d.product.id = :productId
-    """)
+                SELECT COALESCE(SUM(d.stock), 0)
+                FROM ProductDetail d
+                WHERE d.product.id = :productId
+            """)
     Integer sumStockByProductId(@Param("productId") UUID productId);
 
     @Query("""
@@ -37,7 +37,7 @@ public interface ProductDetailRepository extends JpaRepository<ProductDetail, UU
     FROM ProductDetail pd
     JOIN pd.product p
     JOIN p.category c
-    WHERE p.inventoryState IN ('BAJO_STOCK', 'DISPONIBLE') and pd.stock > 0
+    WHERE p.inventoryState IN ('BAJO_STOCK', 'DISPONIBLE') and pd.stock > 0 and p.stock > 0
     ORDER BY p.name
     """)
     List<AvailableProductDTO> findAvailableProductsForSale();
