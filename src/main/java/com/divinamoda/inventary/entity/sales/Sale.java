@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -18,6 +20,7 @@ import lombok.Data;
 @Entity
 @Table(name = "sales")
 @Data
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Sale {
 
     @Id

@@ -2,6 +2,8 @@ package com.divinamoda.inventary.entity.sales;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,6 +15,7 @@ import lombok.Data;
 @Entity
 @Table(name = "customers")
 @Data
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Customer {
 
     @Id

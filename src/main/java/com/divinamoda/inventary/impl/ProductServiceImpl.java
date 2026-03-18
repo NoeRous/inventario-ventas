@@ -21,6 +21,7 @@ import com.divinamoda.inventary.repository.ProductRepository;
 import com.divinamoda.inventary.service.ProductService;
 
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Sort;
 
 @Service
 @Transactional
@@ -43,7 +44,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> listAllProducts() {
-        return productRepository.findAll();
+        return productRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
     }
 
     @Override

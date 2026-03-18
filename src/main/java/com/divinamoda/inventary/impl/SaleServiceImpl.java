@@ -1,6 +1,7 @@
 package com.divinamoda.inventary.impl;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 import com.divinamoda.inventary.dto.sales.SaleItemDTO;
@@ -41,7 +42,7 @@ public class SaleServiceImpl implements SaleService {
         this.productRepository = productRepository;
     }
 
-  @Transactional
+    @Transactional
     public Sale saveSale(SaleDTO saleDTO) {
 
         Customer customer = customerRepository.findById(saleDTO.getCustomerId())
@@ -110,5 +111,14 @@ public class SaleServiceImpl implements SaleService {
         }
 
         return savedSale;
+    }
+
+    //sales 
+    @Override
+    public List<Sale> listAllSales(String type) {
+        if (type == null || type.isBlank()) {
+            return saleRepository.findAll();
+        }
+        return saleRepository.findByType(type);
     }
 }

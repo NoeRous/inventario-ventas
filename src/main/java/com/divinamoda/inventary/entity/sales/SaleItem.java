@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 import com.divinamoda.inventary.entity.products.ProductDetail;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,6 +20,7 @@ import lombok.Data;
 @Entity
 @Table(name = "sale_items")
 @Data
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class SaleItem {
 
     @Id

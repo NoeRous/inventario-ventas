@@ -1,5 +1,6 @@
 package com.divinamoda.inventary.repository;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -7,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.divinamoda.inventary.entity.sales.Sale;
 
 public interface SaleRepository extends JpaRepository<Sale, UUID> {
-    
+    List<Sale> findByType(String type);
 }
