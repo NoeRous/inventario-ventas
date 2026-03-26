@@ -1,10 +1,5 @@
 package com.divinamoda.inventary.impl;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,6 +13,7 @@ import com.divinamoda.inventary.entity.products.ProductDetail;
 import com.divinamoda.inventary.exception.BadRequestException;
 import com.divinamoda.inventary.repository.ProductDetailRepository;
 import com.divinamoda.inventary.repository.ProductRepository;
+import com.divinamoda.inventary.service.CloudinaryService;
 import com.divinamoda.inventary.service.ProductService;
 
 import jakarta.transaction.Transactional;
@@ -29,12 +25,15 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final ProductDetailRepository detailRepo;
+    private final CloudinaryService cloudinaryService;
 
     // ✅ INYECTAMOS LOS DOS
     public ProductServiceImpl(ProductRepository productRepository,
-            ProductDetailRepository detailRepo) {
+            ProductDetailRepository detailRepo,
+            CloudinaryService cloudinaryService) {
         this.productRepository = productRepository;
         this.detailRepo = detailRepo;
+        this.cloudinaryService = cloudinaryService;
     }
 
     @Override
@@ -104,41 +103,9 @@ public class ProductServiceImpl implements ProductService {
             throw new RuntimeException("Archivo vacío");
         }
 
-        try {
-            // 📁 Carpeta uploads/products (relativa al proyecto)
-            Path uploadPath = Paths.get("uploads");
-
-            // Crear carpetas si no existen
-            if (!Files.exists(uploadPath)) {
-                Files.createDirectories(uploadPath);
-            }
-
-            // 📄 Obtener extensión segura
-            String originalFilename = file.getOriginalFilename();
-            String extension = "";
-
-            if (originalFilename != null && originalFilename.contains(".")) {
-                extension = originalFilename.substring(originalFilename.lastIndexOf("."));
-            }
-
-            // 🆔 Nombre único
-            String fileName = UUID.randomUUID().toString() + extension;
-
-            // 💾 Guardar archivo
-            Path filePath = uploadPath.resolve(fileName);
-            Files.copy(
-                    file.getInputStream(),
-                    filePath,
-                    StandardCopyOption.REPLACE_EXISTING);
-
-            // 🗂 Guardar ruta relativa en BD
-            product.setImage("/uploads/" + fileName);
-
-            return productRepository.save(product);
-
-        } catch (IOException e) {
-            throw new RuntimeException("Error al guardar imagen", e);
-        }
+        String imageUrl = cloudinaryService.uploadImage(file);
+        product.setImage(imageUrl);
+        return productRepository.save(product);
     }
 
     //✅ MÉTODO PARA OBTENER DETALLES DE UN PRODUCTO

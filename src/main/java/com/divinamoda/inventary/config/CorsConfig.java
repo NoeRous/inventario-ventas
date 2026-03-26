@@ -16,7 +16,7 @@ public class CorsConfig {
 
                 registry.addMapping("/**")
                         .allowedOrigins("https://inventario-frontend-xi.vercel.app/")
-                        //.allowedOrigins("http://localhost:4200/") // 👈 TU FRONTEND
+                       // .allowedOrigins("http://localhost:4200/") // 👈 TU FRONTEND
                         .allowedMethods("*")
                         .allowedHeaders("*");
             }
