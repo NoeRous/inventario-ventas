@@ -1,9 +1,11 @@
 package com.divinamoda.inventary.controller.sales;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.divinamoda.inventary.dto.sales.AvailableProductDTO;
 import com.divinamoda.inventary.dto.sales.SaleDTO;
+import com.divinamoda.inventary.dto.sales.SaleItemSaleDTO;
 import com.divinamoda.inventary.entity.sales.Sale;
 import com.divinamoda.inventary.repository.ProductDetailRepository;
 import com.divinamoda.inventary.service.SaleService;
@@ -52,4 +55,9 @@ public class SaleController {
         return saleService.listAllSales(type);
     }
 
+    //obtener saleItems
+    @GetMapping("/{saleId}/items")
+    public List<SaleItemSaleDTO> getSaleItemsBySaleId(@PathVariable UUID saleId) {
+        return saleService.getSaleItemsBySaleId(saleId);
+    }
 }

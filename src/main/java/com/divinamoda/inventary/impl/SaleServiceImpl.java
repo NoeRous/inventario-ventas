@@ -2,9 +2,12 @@ package com.divinamoda.inventary.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import com.divinamoda.inventary.dto.sales.SaleItemDTO;
+import com.divinamoda.inventary.dto.sales.SaleItemSaleDTO;
+import com.divinamoda.inventary.dto.products.ProductDetailDTO;
 import com.divinamoda.inventary.dto.sales.SaleDTO;
 import com.divinamoda.inventary.entity.products.Product;
 import com.divinamoda.inventary.entity.products.ProductDetail;
@@ -120,5 +123,27 @@ public class SaleServiceImpl implements SaleService {
             return saleRepository.findAll();
         }
         return saleRepository.findByType(type);
+    }
+
+    //listar listado de iteme de venta 
+    public List<SaleItemSaleDTO> getSaleItemsBySaleId(UUID saleId) {
+        return saleItemRepository.findBySaleId(saleId)
+                .stream()
+                .map(item -> new SaleItemSaleDTO(
+                        new ProductDetailDTO(
+                                item.getProductDetail().getProduct().getId(),
+                                item.getProductDetail().getId(),
+                                item.getProductDetail().getSize(),
+                                item.getProductDetail().getColor(),
+                                item.getProductDetail().getWarehouse(),
+                                item.getProductDetail().getStock(),
+                                item.getProductDetail().getProduct()
+                        ),
+                        item.getId(),
+                        item.getQuantity(),
+                        item.getUnitPrice(),
+                        item.getSubtotal()
+                ))
+                .toList();
     }
 }
