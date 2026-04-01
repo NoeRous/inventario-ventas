@@ -76,6 +76,14 @@ public class SaleServiceImpl implements SaleService {
         sale.setDate(LocalDateTime.now());
         sale.setActive(true);
 
+        sale.setObservation(saleDTO.getObservation());
+        sale.setSoldBy(saleDTO.getSoldBy());
+        sale.setSellerProfit(saleDTO.getSellerProfit());
+        sale.setSoldPaid(saleDTO.getSoldPaid());
+        sale.setDeliveredBy(saleDTO.getDeliveredBy());
+        sale.setDeliveryProfit(saleDTO.getDeliveryProfit());
+        sale.setDeliveryPaid(saleDTO.getDeliveryPaid());
+
         Sale savedSale = saleRepository.save(sale);
 
         // 3) Descontar stock y crear items

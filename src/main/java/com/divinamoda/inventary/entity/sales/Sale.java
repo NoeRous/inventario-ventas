@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
@@ -60,4 +62,48 @@ public class Sale {
 
     @Column(nullable = false)
     private Boolean active = true;
+
+    @Column(columnDefinition = "TEXT")
+    private String observation;
+
+    @Column(name = "sold_by", length = 100)
+    private String soldBy;
+
+    @Column(name = "delivered_by", length = 100)
+    private String deliveredBy;
+
+    @Column(name = "seller_profit", precision = 10, scale = 2)
+    private BigDecimal sellerProfit = BigDecimal.ZERO;
+
+    @Column(name = "delivery_profit", precision = 10, scale = 2)
+    private BigDecimal deliveryProfit = BigDecimal.ZERO;
+
+    @Column(name = "divina_profit", precision = 10, scale = 2)
+    private BigDecimal divinaProfit = BigDecimal.ZERO;
+
+    @Column(name = "sold_paid")
+    private Boolean soldPaid = false;
+
+    @Column(name = "delivery_paid")
+    private Boolean deliveryPaid = false;
+
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
+
+    @Column(name = "created_by", length = 100)
+    private String createdBy;
+
+    @Column(name = "updated_by", length = 100)
+    private String updatedBy;
+
+    @Column(name = "deleted_by", length = 100)
+    private String deletedBy;
+
 }

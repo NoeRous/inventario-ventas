@@ -16,5 +16,15 @@ public class SaleDTO {
     private BigDecimal amountPaid;
     private String paymentMethod; // cash / transfer / qr / card
     private SaleItemDTO[] saleItems;
+
+
+     // Detalle de venta
+    private String observation;
+    private String soldBy;
+    private BigDecimal sellerProfit;
+    private Boolean soldPaid;
+    private String deliveredBy;
+    private BigDecimal deliveryProfit;
+    private Boolean deliveryPaid;
     
 }
