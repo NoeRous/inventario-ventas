@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.divinamoda.inventary.dto.sales.AvailableProductDTO;
 import com.divinamoda.inventary.dto.sales.SaleDTO;
+import com.divinamoda.inventary.dto.sales.SaleDetailDTO;
 import com.divinamoda.inventary.dto.sales.SaleItemSaleDTO;
 import com.divinamoda.inventary.entity.sales.Sale;
 import com.divinamoda.inventary.repository.ProductDetailRepository;
@@ -59,5 +61,13 @@ public class SaleController {
     @GetMapping("/{saleId}/items")
     public List<SaleItemSaleDTO> getSaleItemsBySaleId(@PathVariable UUID saleId) {
         return saleService.getSaleItemsBySaleId(saleId);
+    }
+
+    @PutMapping("/{id}/detail")
+    public ResponseEntity<SaleDTO> updateSaleDetail(
+            @PathVariable UUID id,
+            @RequestBody SaleDetailDTO detailDTO) {
+
+        return ResponseEntity.ok(saleService.updateSaleDetail(id, detailDTO));
     }
 }

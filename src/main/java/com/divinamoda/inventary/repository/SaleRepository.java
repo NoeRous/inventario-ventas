@@ -9,4 +9,5 @@ import com.divinamoda.inventary.entity.sales.Sale;
 
 public interface SaleRepository extends JpaRepository<Sale, UUID> {
     List<Sale> findByType(String type);
+    List<Sale> findByTypeOrderByDateDesc(String type);
 }

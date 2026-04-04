@@ -12,4 +12,5 @@ public interface SaleService {
     Sale saveSale(SaleDTO sale);
     List<Sale> listAllSales(String type);
     List<SaleItemSaleDTO> getSaleItemsBySaleId(UUID saleId);
+    SaleDTO updateSaleDetail(UUID saleId, com.divinamoda.inventary.dto.sales.SaleDetailDTO detailDTO);
 }

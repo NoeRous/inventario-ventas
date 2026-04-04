@@ -4,11 +4,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+//import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Sort;
 import org.springframework.stereotype.Service;
 import com.divinamoda.inventary.dto.sales.SaleItemDTO;
 import com.divinamoda.inventary.dto.sales.SaleItemSaleDTO;
 import com.divinamoda.inventary.dto.products.ProductDetailDTO;
 import com.divinamoda.inventary.dto.sales.SaleDTO;
+import com.divinamoda.inventary.dto.sales.SaleDetailDTO;
 import com.divinamoda.inventary.entity.products.Product;
 import com.divinamoda.inventary.entity.products.ProductDetail;
 import com.divinamoda.inventary.entity.sales.Customer;
@@ -22,6 +24,7 @@ import com.divinamoda.inventary.repository.SaleRepository;
 import com.divinamoda.inventary.service.SaleService;
 import jakarta.transaction.Transactional;
 import com.divinamoda.inventary.enums.InventoryState;
+import org.springframework.data.domain.Sort;
 
 @Service
 @Transactional
@@ -125,12 +128,13 @@ public class SaleServiceImpl implements SaleService {
     }
 
     //sales 
-    @Override
+   @Override
     public List<Sale> listAllSales(String type) {
         if (type == null || type.isBlank()) {
-            return saleRepository.findAll();
+            return saleRepository.findAll(Sort.by("date").descending());
         }
-        return saleRepository.findByType(type);
+
+        return saleRepository.findByTypeOrderByDateDesc(type);
     }
 
     //listar listado de iteme de venta 
@@ -154,4 +158,34 @@ public class SaleServiceImpl implements SaleService {
                 ))
                 .toList();
     }
+    
+   
+    public SaleDTO updateSaleDetail(UUID id, SaleDetailDTO detailDTO) {
+        Sale sale = saleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Venta no encontrada"));
+
+        sale.setObservation(detailDTO.getObservation());
+        sale.setSoldBy(detailDTO.getSoldBy());
+        sale.setSellerProfit(detailDTO.getSellerProfit());
+        sale.setSoldPaid(detailDTO.getSoldPaid());
+        sale.setDeliveredBy(detailDTO.getDeliveredBy());
+        sale.setDeliveryProfit(detailDTO.getDeliveryProfit());
+        sale.setDeliveryPaid(detailDTO.getDeliveryPaid());
+        sale.setUpdatedAt(LocalDateTime.now());
+
+        Sale updatedSale = saleRepository.save(sale);
+        
+        SaleDTO dto = new SaleDTO();
+        dto.setObservation(updatedSale.getObservation());
+        dto.setSoldBy(updatedSale.getSoldBy());
+        dto.setSellerProfit(updatedSale.getSellerProfit());
+        dto.setSoldPaid(updatedSale.getSoldPaid());
+        dto.setDeliveredBy(updatedSale.getDeliveredBy());
+        dto.setDeliveryProfit(updatedSale.getDeliveryProfit());
+        dto.setDeliveryPaid(updatedSale.getDeliveryPaid());
+
+        return dto;
+        
+    }
+
 }
